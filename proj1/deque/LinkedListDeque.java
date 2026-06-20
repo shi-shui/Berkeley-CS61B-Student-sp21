@@ -10,7 +10,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         private final T item;
         private AllNode<T> next;
 
-        public AllNode(AllNode<T> p, T i, AllNode<T> n) {
+        AllNode(AllNode<T> p, T i, AllNode<T> n) {
             prev = p;
             item = i;
             next = n;
@@ -53,13 +53,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
-    }
-
-    public LinkedListDeque(T x) {
-        sentinel = new AllNode<>(null, null, null);
-        sentinel.next = new AllNode<>(sentinel, x, sentinel);
-        sentinel.prev = sentinel.next;
-        size = 1;
     }
 
     @Override
@@ -166,32 +159,22 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         }
 
-        LinkedListDeque<?> other = (LinkedListDeque<?>) o;
-        if (this.size != other.size) {
+        Deque<?> other = (Deque<?>) o;
+        if (this.size != other.size()) {
             return false;
         }
 
-        AllNode<?> curSelf = this.sentinel.next;
-        AllNode<?> curOther = other.sentinel.next;
+        for (int i = 0; i < size(); i++) {
+            Object thisItem = this.get(i);
+            Object otherItem = other.get(i);
 
-        for (int i = 0; i < size; i++) {
-            Object a = curSelf.item;
-            Object b = curOther.item;
-
-            if (a == null && b == null) {
-                curSelf = curSelf.next;
-                curOther = curOther.next;
-                continue;
-            }
-            if (a == null || b == null) {
+            if (thisItem == null) {
+                if (otherItem != null) {
+                    return false;
+                }
+            } else if (!thisItem.equals(otherItem)) {
                 return false;
             }
-            if (!a.equals(b)) {
-                return false;
-            }
-
-            curSelf = curSelf.next;
-            curOther = curOther.next;
         }
         return true;
     }
