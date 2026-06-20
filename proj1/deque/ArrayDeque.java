@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 import static java.lang.System.arraycopy;
 
-public class ArrayDeque<T> implements Iterable<T> {
+public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     private int scope;
     private int size;
     private int head;
@@ -15,6 +15,14 @@ public class ArrayDeque<T> implements Iterable<T> {
     public ArrayDeque() {
         ontology = (T[]) new Object[8];
         scope = 8;
+        size = 0;
+        head = 0;
+        tail = 0;
+    }
+
+    public ArrayDeque(int i) {
+        ontology = (T[]) new Object[i];
+        scope = i;
         size = 0;
         head = 0;
         tail = 0;
@@ -76,6 +84,7 @@ public class ArrayDeque<T> implements Iterable<T> {
 
     }
 
+    @Override
     public void addFirst(T item) {
         expansion();
         size++;
@@ -83,6 +92,7 @@ public class ArrayDeque<T> implements Iterable<T> {
         ontology[head] = item;
     }
 
+    @Override
     public void addLast(T item) {
         expansion();
         size++;
@@ -90,14 +100,17 @@ public class ArrayDeque<T> implements Iterable<T> {
         tail = (tail + 1 + scope) % scope;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void printDeque() {
         for (T the_item : this) {
             System.out.print(the_item + " ");
@@ -105,6 +118,7 @@ public class ArrayDeque<T> implements Iterable<T> {
         System.out.println();
     }
 
+    @Override
     public T removeFirst() {
         if (size == 0) {
             return null;
@@ -116,16 +130,19 @@ public class ArrayDeque<T> implements Iterable<T> {
         return x;
     }
 
+    @Override
     public T removeLast() {
         if (size == 0) {
             return null;
         }
         size--;
         tail = (tail - 1 + scope) % scope;
+        T neediness = ontology[tail];
         cutback();
-        return ontology[tail];
+        return neediness;
     }
 
+    @Override
     public T get(int index) {
         if (index < 0 || index >= size) {
             return null;
