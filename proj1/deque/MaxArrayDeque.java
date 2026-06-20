@@ -11,7 +11,7 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
     }
 
     public T max() {
-        if (isEmpty()) {
+        if (this.size() <= 0) {
             return null;
         }
 
@@ -26,7 +26,7 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
     }
 
     public T max(Comparator<T> c) {
-        if (isEmpty()) {
+        if (this.size() <= 0) {
             return null;
         }
 

@@ -14,7 +14,7 @@ public class GuitarString {
     /* Create a guitar string of the given frequency.(做一根指定频率的吉他弦。) */
     public GuitarString(double frequency) {
         int capacity = (int) Math.round(SR / frequency);
-        buffer = new ArrayDeque<>(capacity);
+        buffer = new ArrayDeque<>();
         for (int i = 0; i < capacity; i++) {
             buffer.addLast(0.0);
         }

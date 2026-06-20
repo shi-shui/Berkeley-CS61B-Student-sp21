@@ -20,14 +20,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         tail = 0;
     }
 
-    public ArrayDeque(int i) {
-        ontology = (T[]) new Object[i];
-        scope = i;
-        size = 0;
-        head = 0;
-        tail = 0;
-    }
-
     private class DequeIterator implements Iterator<T> {
         private int wizpos;
 
