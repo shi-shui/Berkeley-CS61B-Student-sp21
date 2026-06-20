@@ -10,7 +10,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     private int size;
     private int head;
     private int tail;
-    T[] ontology;
+    private T[] ontology;
 
     public ArrayDeque() {
         ontology = (T[]) new Object[8];
@@ -31,7 +31,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     private class DequeIterator implements Iterator<T> {
         private int wizpos;
 
-        public DequeIterator() {
+        DequeIterator() {
             wizpos = 0;
         }
 
@@ -42,11 +42,13 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             int realIndex = (head + wizpos) % scope;
-            T the_item = ontology[realIndex];
+            T theItem = ontology[realIndex];
             wizpos++;
-            return the_item;
+            return theItem;
         }
     }
 
@@ -55,28 +57,28 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         return new DequeIterator();
     }
 
-    public void ontologyCopy(int newScope) {
-        T[] new_ontology = (T[]) new Object[newScope];
+    private void ontologyCopy(int newScope) {
+        T[] newOntology = (T[]) new Object[newScope];
         if (head < tail) {
-            arraycopy(ontology, head, new_ontology, 0, tail - head);
+            arraycopy(ontology, head, newOntology, 0, tail - head);
         } else {
-            arraycopy(ontology, head, new_ontology, 0, scope - head);
-            arraycopy(ontology, 0, new_ontology, scope - head, tail);
+            arraycopy(ontology, head, newOntology, 0, scope - head);
+            arraycopy(ontology, 0, newOntology, scope - head, tail);
         }
         head = 0;
         tail = size;
         scope = newScope;
-        ontology = new_ontology;
+        ontology = newOntology;
     }
 
-    public void expansion() {
+    private void expansion() {
         if (size == scope) {
             int newScope = scope * 2;
             ontologyCopy(newScope);
         }
     }
 
-    public void cutback() {
+    private void cutback() {
         if (scope >= 16 && size * 4 <= scope) {
             int newScope = Math.max(8, scope / 2);
             ontologyCopy(newScope);
@@ -112,8 +114,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
 
     @Override
     public void printDeque() {
-        for (T the_item : this) {
-            System.out.print(the_item + " ");
+        for (T theItem : this) {
+            System.out.print(theItem + " ");
         }
         System.out.println();
     }
@@ -152,8 +154,12 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     }
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ArrayDeque<?>)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Deque<?>)) {
+            return false;
+        }
 
         ArrayDeque<?> other = (ArrayDeque<?>) o;
         if (this.size != other.size()) {

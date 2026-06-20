@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
-    public static class AllNode<T> {
+    private static class AllNode<T> {
         private AllNode<T> prev;
         private final T item;
         private AllNode<T> next;
@@ -23,7 +23,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     private class DequeIterator implements Iterator<T> {
         private AllNode<T> current;
 
-        public DequeIterator() {
+        DequeIterator() {
             current = sentinel.next;
         }
 
@@ -34,7 +34,9 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             T res = current.item;
             current = current.next;
             return res;
@@ -88,8 +90,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     @Override
     public void printDeque() {
-        for (T the_item : this) {
-            System.out.print(the_item + " ");
+        for (T theItem : this) {
+            System.out.print(theItem + " ");
         }
         System.out.println();
     }
@@ -157,11 +159,17 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LinkedListDeque<?>)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Deque<?>)) {
+            return false;
+        }
 
         LinkedListDeque<?> other = (LinkedListDeque<?>) o;
-        if (this.size != other.size) return false;
+        if (this.size != other.size) {
+            return false;
+        }
 
         AllNode<?> curSelf = this.sentinel.next;
         AllNode<?> curOther = other.sentinel.next;
@@ -175,8 +183,12 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
                 curOther = curOther.next;
                 continue;
             }
-            if (a == null || b == null) return false;
-            if (!a.equals(b)) return false;
+            if (a == null || b == null) {
+                return false;
+            }
+            if (!a.equals(b)) {
+                return false;
+            }
 
             curSelf = curSelf.next;
             curOther = curOther.next;

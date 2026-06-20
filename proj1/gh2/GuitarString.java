@@ -26,7 +26,7 @@ public class GuitarString {
     public void pluck() {
         for (int i = 0; i < buffer.size(); i++) {
             double r = Math.random() - 0.5;
-            buffer.removeLast();
+            buffer.removeFirst();
             buffer.addLast(r);
         }
     }
